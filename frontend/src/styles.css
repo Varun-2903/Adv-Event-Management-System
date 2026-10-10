@@ -1,0 +1,28 @@
+:root{
+  font-family: Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:#182235;background:#f4f7fb;font-synthesis:none;
+}
+*{box-sizing:border-box} body{margin:0} button,input,textarea,select{font:inherit}
+.nav{height:70px;background:#0f4c81;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 7%;box-shadow:0 3px 15px #0002}
+.brand{font-size:25px;font-weight:800}.brand span{color:#8bd3ff}.nav-right{display:flex;gap:15px;align-items:center}
+.role{background:#ffffff22;padding:8px 12px;border-radius:20px;font-size:12px;font-weight:700}
+.container{max-width:1200px;margin:0 auto;padding:38px 24px}.page-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}
+h1{font-size:34px;margin:0 0 6px}h2{margin-top:30px}.muted{color:#718096}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.event-card,.panel,.reg-card{background:white;border:1px solid #e4eaf2;border-radius:16px;padding:22px;box-shadow:0 8px 24px #23395d0b}
+.event-card h3{font-size:21px;margin:13px 0 8px}.event-card p{color:#667085;min-height:48px;line-height:1.5}
+.event-top{display:flex;justify-content:space-between;font-size:12px;color:#667085}.pill{display:inline-block;background:#e8f3ff;color:#0f5fa8;padding:5px 10px;border-radius:999px;font-weight:700}
+.meta{font-size:13px;margin:7px 0;color:#526174}.primary,.secondary,.danger,.ghost{border:0;border-radius:9px;padding:10px 16px;cursor:pointer;font-weight:700}
+.primary{background:#1267a8;color:white}.primary:hover{background:#0e568e}.secondary{background:#edf4fb;color:#145c8d}.danger{background:#fee8e8;color:#b42318}.ghost{background:#fff2;color:white;border:1px solid #ffffff55}
+.wide{width:100%;margin-top:10px}.actions{display:flex;gap:10px;margin-top:18px}.link{border:0;background:none;color:#1267a8;cursor:pointer;margin-top:15px}
+.auth-wrap{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#0f4c81,#dfeffc)}
+.auth-card{background:white;width:min(430px,92vw);padding:34px;border-radius:22px;box-shadow:0 20px 50px #001b3b40}
+.logo{width:52px;height:52px;display:grid;place-items:center;background:#0f4c81;color:white;border-radius:14px;font-weight:900;font-size:19px}
+.auth-card h1{margin-top:18px}.auth-card label,.panel label{display:block;font-weight:700;font-size:13px;margin:13px 0}
+input,textarea,select{width:100%;padding:11px 12px;margin-top:7px;border:1px solid #d5dce6;border-radius:9px;background:#fff;outline:none}
+input:focus,textarea:focus,select:focus{border-color:#1267a8;box-shadow:0 0 0 3px #1267a815}textarea{min-height:80px;resize:vertical}
+.error,.notice{padding:12px 15px;border-radius:10px;margin:12px 0}.error{background:#fff0f0;color:#b42318}.notice{background:#eaf8ef;color:#137333}
+.demo-box{margin-top:20px;background:#f4f7fb;padding:12px;border-radius:10px;font-size:13px}
+.registration-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px}.reg-card{display:flex;align-items:center;gap:15px;justify-content:space-between}.reg-card small{display:block;color:#667085;margin-top:5px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px}.mini-row{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #edf0f4;font-size:13px}.mini-row span{color:#667085}.empty{background:white;border:1px dashed #cbd5e1;padding:30px;text-align:center;border-radius:14px;color:#667085}
+@media(max-width:800px){.two-col{grid-template-columns:1fr}.container{padding:25px 16px}.nav{padding:0 4%}.reg-card{flex-wrap:wrap}}
