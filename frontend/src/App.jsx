@@ -56,9 +56,6 @@ function Auth({ onLogin }) {
         <button className="link" onClick={()=>{setMode(mode==="login"?"register":"login");setError("")}}>
           {mode === "login" ? "Create new account" : "Already have an account? Login"}
         </button>
-        <div className="demo-box">
-          <b>Admin demo</b><br/>admin@event.com / admin123
-        </div>
       </div>
     </div>
   );
