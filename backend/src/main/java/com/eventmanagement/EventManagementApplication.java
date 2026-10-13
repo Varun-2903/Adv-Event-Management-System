@@ -22,13 +22,20 @@ public class EventManagementApplication {
                                 @Value("${app.admin.email}") String adminEmail,
                                 @Value("${app.admin.initial-password}") String adminPassword) {
         return args -> {
-            if (users.findByEmail(adminEmail).isEmpty()) {
+            var existingAdmin = users.findByEmail(adminEmail);
+            if (existingAdmin.isEmpty()) {
                 User admin = new User();
                 admin.setName("System Admin");
                 admin.setEmail(adminEmail);
                 admin.setPassword(encoder.encode(adminPassword));
                 admin.setRole(Role.ADMIN);
                 users.save(admin);
+            } else {
+                User admin = existingAdmin.get();
+                if (!encoder.matches(adminPassword, admin.getPassword())) {
+                    admin.setPassword(encoder.encode(adminPassword));
+                    users.save(admin);
+                }
             }
         };
     }

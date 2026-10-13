@@ -176,7 +176,7 @@ After Razorpay payment signature verification succeeds, the backend creates the 
 
 The root `render.yaml` defines a static frontend, a Docker-based Spring Boot API, and a PostgreSQL database. In Render, choose **New + -> Blueprint**, connect this GitHub repository, and apply the blueprint. The backend keeps MySQL support for local development and uses PostgreSQL on Render.
 
-Render provisions the database and connects it to the API automatically. The blueprint generates the JWT signing key and initial admin password. Find `ADMIN_INITIAL_PASSWORD` in the API service's environment settings and use it to sign in as `admin@event.com`; change it after first login if the application adds that capability.
+Render provisions the database and connects it to the API automatically. The blueprint generates the JWT signing key and initial admin password. The API reconciles the admin account password with `ADMIN_INITIAL_PASSWORD` at startup. Find that value in the API service's environment settings and use it to sign in as `admin@event.com`.
 
 The Render PostgreSQL plan in this blueprint is free and temporary (Render removes free databases after 30 days). Upgrade it before expiration to keep the deployed app's data. The new database starts empty; data in a local MySQL database is not migrated.
 
