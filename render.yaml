@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: event-management-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/events/public
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_USERNAME
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+
+  - type: web
+    name: event-management-frontend
+    runtime: static
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_HOST
+        fromService:
+          type: web
+          name: event-management-api
+          property: host

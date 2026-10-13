@@ -1,4 +1,5 @@
-const API = "http://localhost:8080/api";
+const API_HOST = (import.meta.env.VITE_API_HOST || "http://localhost:8080").replace(/\/+$/, "");
+const API = `${API_HOST.startsWith("http") ? API_HOST : `https://${API_HOST}`}/api`;
 
 export async function api(path, options = {}) {
   const token = localStorage.getItem("token");
