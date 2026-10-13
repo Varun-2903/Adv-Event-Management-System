@@ -7,5 +7,6 @@ RUN mvn -f backend/pom.xml clean package -DskipTests
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 COPY --from=build /workspace/backend/target/event-management-backend-1.0.0.jar app.jar
+COPY backend/entrypoint.sh /app/entrypoint.sh
 EXPOSE 8080
-CMD ["sh", "-c", "java -Dserver.port=${PORT:-8080} -jar /app/app.jar"]
+ENTRYPOINT ["sh", "/app/entrypoint.sh"]

@@ -174,12 +174,10 @@ After Razorpay payment signature verification succeeds, the backend creates the 
 
 ## Deploy on Render
 
-The root `render.yaml` defines a static frontend and a Docker-based Spring Boot API. In Render, choose **New + -> Blueprint**, connect this GitHub repository, and apply the blueprint.
+The root `render.yaml` defines a static frontend, a Docker-based Spring Boot API, and a PostgreSQL database. In Render, choose **New + -> Blueprint**, connect this GitHub repository, and apply the blueprint. The backend keeps MySQL support for local development and uses PostgreSQL on Render.
 
-Before the API can start, provide these environment variables for `event-management-api`:
+Render provisions the database and connects it to the API automatically. The blueprint generates the JWT signing key and initial admin password. Find `ADMIN_INITIAL_PASSWORD` in the API service's environment settings and use it to sign in as `admin@event.com`; change it after first login if the application adds that capability.
 
-- `DATABASE_URL`: JDBC URL for a reachable MySQL 8 database, including connection options where required (for example, `jdbc:mysql://HOST:3306/event_management?useSSL=true&serverTimezone=UTC`). Render does not provide managed MySQL; use an external MySQL provider and allow Render's outbound connections.
-- `DATABASE_USERNAME` and `DATABASE_PASSWORD`: database credentials.
-- `CORS_ALLOWED_ORIGINS`: the frontend's complete origin, including `https://` and no trailing slash.
+The Render PostgreSQL plan in this blueprint is free and temporary (Render removes free databases after 30 days). Upgrade it before expiration to keep the deployed app's data. The new database starts empty; data in a local MySQL database is not migrated.
 
-The blueprint generates `JWT_SECRET`. Set `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` on the API service if paid-event checkout is needed. The frontend gets the API host from the blueprint automatically. The API uses Hibernate schema updates on startup; back up production data before schema changes.
+The frontend gets the API host from the blueprint automatically. Set `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` on the API service if paid-event checkout is needed. The API uses Hibernate schema updates on startup; back up production data before schema changes.

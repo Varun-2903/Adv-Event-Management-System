@@ -3,6 +3,7 @@ package com.eventmanagement;
 import com.eventmanagement.entity.Role;
 import com.eventmanagement.entity.User;
 import com.eventmanagement.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,13 +18,15 @@ public class EventManagementApplication {
     }
 
     @Bean
-    CommandLineRunner seedAdmin(UserRepository users, PasswordEncoder encoder) {
+    CommandLineRunner seedAdmin(UserRepository users, PasswordEncoder encoder,
+                                @Value("${app.admin.email}") String adminEmail,
+                                @Value("${app.admin.initial-password}") String adminPassword) {
         return args -> {
-            if (users.findByEmail("admin@event.com").isEmpty()) {
+            if (users.findByEmail(adminEmail).isEmpty()) {
                 User admin = new User();
                 admin.setName("System Admin");
-                admin.setEmail("admin@event.com");
-                admin.setPassword(encoder.encode("admin123"));
+                admin.setEmail(adminEmail);
+                admin.setPassword(encoder.encode(adminPassword));
                 admin.setRole(Role.ADMIN);
                 users.save(admin);
             }
