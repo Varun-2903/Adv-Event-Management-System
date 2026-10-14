@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Locale;
+
 @Service
 public class AuthService {
     private final UserRepository users;
@@ -25,7 +27,8 @@ public class AuthService {
     }
 
     public AuthDtos.AuthResponse register(AuthDtos.RegisterRequest req) {
-        if (users.findByEmail(req.email()).isPresent()) {
+        String email = normalizeEmail(req.email());
+        if (users.findByEmailIgnoreCase(email).isPresent()) {
             throw new IllegalArgumentException("Email already registered");
         }
 
@@ -38,7 +41,7 @@ public class AuthService {
 
         User user = new User();
         user.setName(req.name());
-        user.setEmail(req.email());
+        user.setEmail(email);
         user.setPassword(encoder.encode(req.password()));
         user.setRole(role);
         users.save(user);
@@ -47,11 +50,16 @@ public class AuthService {
     }
 
     public AuthDtos.AuthResponse login(AuthDtos.LoginRequest req) {
+        String email = normalizeEmail(req.email());
         authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(req.email(), req.password()));
+                new UsernamePasswordAuthenticationToken(email, req.password()));
 
-        User user = users.findByEmail(req.email()).orElseThrow();
+        User user = users.findByEmailIgnoreCase(email).orElseThrow();
         return response(user);
+    }
+
+    private String normalizeEmail(String email) {
+        return email.trim().toLowerCase(Locale.ROOT);
     }
 
     private AuthDtos.AuthResponse response(User user) {

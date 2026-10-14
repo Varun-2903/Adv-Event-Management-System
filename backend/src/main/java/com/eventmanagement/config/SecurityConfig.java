@@ -26,7 +26,7 @@ public class SecurityConfig {
         @Bean
     UserDetailsService userDetailsService(UserRepository users) {
         return email -> {
-            var user = users.findByEmail(email)
+                var user = users.findByEmailIgnoreCase(email.trim())
                     .orElseThrow(() ->
                             new RuntimeException("User not found"));
 

@@ -54,12 +54,12 @@ CREATE DATABASE event_management;
 
 Then check `database/schema.sql` if you want the starter database/data.
 
-Default admin account is created automatically by the backend if it does not exist:
+The default admin account is created automatically by the backend if it does not exist:
 
 - Email: `admin@event.com`
 - Password: `admin123`
 
-Change this password before using the system seriously.
+Use `admin@event.com` with password `admin123` for both local development and Render. On startup, the backend sets the admin account password from `ADMIN_INITIAL_PASSWORD`.
 
 ## 2. Configure backend
 
@@ -176,7 +176,7 @@ After Razorpay payment signature verification succeeds, the backend creates the 
 
 The root `render.yaml` defines a static frontend, a Docker-based Spring Boot API, and a PostgreSQL database. In Render, choose **New + -> Blueprint**, connect this GitHub repository, and apply the blueprint. The backend keeps MySQL support for local development and uses PostgreSQL on Render.
 
-Render provisions the database and connects it to the API automatically. The blueprint generates the JWT signing key and initial admin password. The API reconciles the admin account password with `ADMIN_INITIAL_PASSWORD` at startup. Find that value in the API service's environment settings and use it to sign in as `admin@event.com`.
+Render provisions the database and connects it to the API automatically. The blueprint generates the JWT signing key and sets `ADMIN_INITIAL_PASSWORD` to `admin123`. The API reconciles the admin account password with that value at startup, so sign in as `admin@event.com` with password `admin123`.
 
 The Render PostgreSQL plan in this blueprint is free and temporary (Render removes free databases after 30 days). Upgrade it before expiration to keep the deployed app's data. The new database starts empty; data in a local MySQL database is not migrated.
 

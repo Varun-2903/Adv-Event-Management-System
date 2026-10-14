@@ -18,10 +18,12 @@ function Auth({ onLogin }) {
   const [mode, setMode] = useState("login");
   const [form, setForm] = useState({name:"",email:"",password:"",role:"PARTICIPANT"});
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function submit(e) {
     e.preventDefault();
     setError("");
+    setIsSubmitting(true);
     try {
       const result = mode === "login"
         ? await login({email:form.email,password:form.password})
@@ -29,7 +31,11 @@ function Auth({ onLogin }) {
       localStorage.setItem("token", result.token);
       localStorage.setItem("user", JSON.stringify(result));
       onLogin(result);
-    } catch (err) { setError(err.message); }
+    } catch (err) {
+      setError(err.message || "Unable to connect to the server. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -51,7 +57,9 @@ function Auth({ onLogin }) {
           </>}
           <label>Email<input type="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} required /></label>
           <label>Password<input type="password" value={form.password} onChange={e=>setForm({...form,password:e.target.value})} required /></label>
-          <button className="primary wide">{mode === "login" ? "Login" : "Register"}</button>
+          <button className="primary wide" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Please wait..." : mode === "login" ? "Login" : "Register"}
+          </button>
         </form>
         <button className="link" onClick={()=>{setMode(mode==="login"?"register":"login");setError("")}}>
           {mode === "login" ? "Create new account" : "Already have an account? Login"}
